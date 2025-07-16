@@ -1,0 +1,186 @@
+.index {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%);
+  color: #ffffff;
+  padding: 0;
+  position: relative;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+
+  // 添加星空背景效果
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+      radial-gradient(1px 1px at 40px 70px, #fff, transparent),
+      radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+      radial-gradient(1px 1px at 130px 80px, #fff, transparent),
+      radial-gradient(2px 2px at 160px 30px, #fff, transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  // 头部区域
+  &__header {
+    text-align: center;
+    padding: 80px 30px 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__logo {
+    margin-bottom: 30px;
+  }
+
+  &__logo-text {
+    font-size: 80px;
+    background: linear-gradient(45deg, #ffd700, #ffeb3b, #fff176);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
+  }
+
+  &__title {
+    font-size: 48px;
+    font-weight: bold;
+    color: #ffd700;
+    margin-bottom: 20px;
+    text-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+    letter-spacing: 2px;
+  }
+
+  &__subtitle {
+    font-size: 30px;
+    color: #e0e0e0;
+    opacity: 0.9;
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+
+  // 主要内容区域
+  &__main {
+    // flex: 1;
+    padding: 0 30px;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    // align-items: center;
+    justify-content: center;
+  }
+
+  // 搜索卡片
+  &__search-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 25px;
+    padding: 50px 40px;
+    width: 100%;
+    max-width: 500px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+  }
+
+  &__search-title {
+    font-size: 36px;
+    font-weight: bold;
+    color: #ffd700;
+    text-align: center;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+  }
+
+  &__input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-top: 40px;
+  }
+
+  &__input-wrapper {
+    position: relative;
+  }
+
+  &__uid-input {
+    width: 90%;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 215, 0, 0.4);
+    border-radius: 35px;
+    padding: 0 30px;
+    font-size: 32px;
+    color: #ffffff;
+    text-align: center;
+    font-weight: 500;
+    
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 30px;
+    }
+
+    &:focus {
+      border-color: #ffd700;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+      outline: none;
+      background: rgba(255, 255, 255, 0.15);
+    }
+  }
+
+  &__search-btn {
+    height: 70px;
+    background: linear-gradient(45deg, #ffd700, #ffb300);
+    border: none;
+    border-radius: 35px;
+    font-size: 32px;
+    font-weight: bold;
+    color: #1a1a2e;
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+    transition: all 0.3s ease;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+
+    &:active {
+      transform: translateY(3px);
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
+    }
+
+    &:disabled {
+      background: rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.5);
+      box-shadow: none;
+    }
+  }
+  &__search-btn-text {
+    font-size: 32px;
+    color: #000000b2;
+    // letter-spacing: 1px;
+  }
+  // 底部信息
+  &__footer {
+    text-align: center;
+    padding: 40px 30px 50px;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__footer-text {
+    font-size: 30px;
+    color: #ffd700;
+    font-weight: 300;
+    opacity: 0.8;
+    font-style: italic;
+    letter-spacing: 1px;
+  }
+}

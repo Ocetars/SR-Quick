@@ -122,17 +122,16 @@ export default function Detail() {
             </View>
             <View className='detail__player-basic'>
               <View className='detail__avatar-section'>
-                <Image
+                {/* <Image
                   className='detail__avatar-icon'
                   src={playerInfo.avatar.icon}
                   mode='aspectFit'
                   onError={() => {
                     console.log('头像加载失败')
                   }}
-                />
+                /> */}
                 <View className='detail__avatar-info'>
                   <Text className='detail__avatar-name'>{playerInfo.avatar.name}</Text>
-                  <Text className='detail__avatar-id'>ID: {playerInfo.avatar.id}</Text>
                 </View>
               </View>
               <View className='detail__basic-info'>
@@ -169,11 +168,11 @@ export default function Detail() {
           {/* 模拟宇宙信息卡片 */}
           <View className='detail__card'>
             <View className='detail__card-header'>
-              <Text className='detail__card-title'>模拟宇宙</Text>
+              <Text className='detail__card-title'>混沌回忆</Text>
             </View>
             <View className='detail__memory-data'>
               <View className='detail__info-row'>
-                <Text className='detail__label'>等级:</Text>
+                <Text className='detail__label'>level:</Text>
                 <Text className='detail__value'>{playerInfo.space_info.memory_data.level}</Text>
               </View>
               <View className='detail__info-row'>

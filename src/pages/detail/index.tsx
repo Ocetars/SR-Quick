@@ -1,7 +1,9 @@
-import { View, Text, Button, Image, Input } from '@tarojs/components'
+import { View, Text, Button, Input } from '@tarojs/components'
 import Taro, { useLoad } from '@tarojs/taro'
 import { useState } from 'react'
-import { getPlayerInfo, showLoading, hideLoading, showError, type PlayerInfo } from '../../utils/api'
+import { getPlayerInfo } from '../../utils/api'
+import { showLoading, hideLoading, showError } from '../../utils/ui'
+import type { PlayerInfo } from '../../types/APIinfo'
 import './index.scss'
 
 export default function Detail() {
@@ -35,7 +37,7 @@ export default function Detail() {
     setError('')
     setPlayerInfo(null)
     showLoading('获取玩家信息中...')
-    
+
     try {
       const data = await getPlayerInfo(targetUid)
       setPlayerInfo(data)
@@ -82,8 +84,8 @@ export default function Detail() {
             maxlength={9}
           />
         </View>
-        <Button 
-          className='detail__search-btn' 
+        <Button
+          className='detail__search-btn'
           type='primary'
           onClick={handleSearch}
           disabled={loading || !uid.trim()}
@@ -131,7 +133,7 @@ export default function Detail() {
                   }}
                 /> */}
                 <View className='detail__avatar-info'>
-                  <Text className='detail__avatar-name'>{playerInfo.avatar.name}</Text>
+                  <Text className='detail__avatar-name'>{playerInfo.avatar?.name || '未知角色'}</Text>
                 </View>
               </View>
               <View className='detail__basic-info'>
@@ -173,51 +175,53 @@ export default function Detail() {
             <View className='detail__memory-data'>
               <View className='detail__info-row'>
                 <Text className='detail__label'>level:</Text>
-                <Text className='detail__value'>{playerInfo.space_info.memory_data.level}</Text>
+                <Text className='detail__value'>{playerInfo.space_info?.memory_data?.level || 0}</Text>
               </View>
               <View className='detail__info-row'>
                 <Text className='detail__label'>混沌回忆等级:</Text>
-                <Text className='detail__value'>{playerInfo.space_info.memory_data.chaos_level}</Text>
+                <Text className='detail__value'>{playerInfo.space_info?.memory_data?.chaos_level || 0}</Text>
               </View>
               <View className='detail__info-row'>
                 <Text className='detail__label'>混沌回忆星数:</Text>
-                <Text className='detail__value'>{playerInfo.space_info.memory_data.chaos_star_count}</Text>
+                <Text className='detail__value'>{playerInfo.space_info?.memory_data?.chaos_star_count || 0}</Text>
               </View>
             </View>
           </View>
 
           {/* 收集统计卡片 */}
-          <View className='detail__card'>
-            <View className='detail__card-header'>
-              <Text className='detail__card-title'>收集统计</Text>
+          {playerInfo.space_info && (
+            <View className='detail__card'>
+              <View className='detail__card-header'>
+                <Text className='detail__card-title'>收集统计</Text>
+              </View>
+              <View className='detail__stats-grid'>
+                <View className='detail__stat-item'>
+                  <Text className='detail__stat-value'>{playerInfo.space_info.avatar_count}</Text>
+                  <Text className='detail__stat-label'>角色</Text>
+                </View>
+                <View className='detail__stat-item'>
+                  <Text className='detail__stat-value'>{playerInfo.space_info.light_cone_count}</Text>
+                  <Text className='detail__stat-label'>光锥</Text>
+                </View>
+                <View className='detail__stat-item'>
+                  <Text className='detail__stat-value'>{playerInfo.space_info.relic_count}</Text>
+                  <Text className='detail__stat-label'>遗器</Text>
+                </View>
+                <View className='detail__stat-item'>
+                  <Text className='detail__stat-value'>{playerInfo.space_info.achievement_count}</Text>
+                  <Text className='detail__stat-label'>成就</Text>
+                </View>
+                <View className='detail__stat-item'>
+                  <Text className='detail__stat-value'>{playerInfo.space_info.book_count}</Text>
+                  <Text className='detail__stat-label'>图鉴</Text>
+                </View>
+                <View className='detail__stat-item'>
+                  <Text className='detail__stat-value'>{playerInfo.space_info.music_count}</Text>
+                  <Text className='detail__stat-label'>音乐</Text>
+                </View>
+              </View>
             </View>
-            <View className='detail__stats-grid'>
-              <View className='detail__stat-item'>
-                <Text className='detail__stat-value'>{playerInfo.space_info.avatar_count}</Text>
-                <Text className='detail__stat-label'>角色</Text>
-              </View>
-              <View className='detail__stat-item'>
-                <Text className='detail__stat-value'>{playerInfo.space_info.light_cone_count}</Text>
-                <Text className='detail__stat-label'>光锥</Text>
-              </View>
-              <View className='detail__stat-item'>
-                <Text className='detail__stat-value'>{playerInfo.space_info.relic_count}</Text>
-                <Text className='detail__stat-label'>遗器</Text>
-              </View>
-              <View className='detail__stat-item'>
-                <Text className='detail__stat-value'>{playerInfo.space_info.achievement_count}</Text>
-                <Text className='detail__stat-label'>成就</Text>
-              </View>
-              <View className='detail__stat-item'>
-                <Text className='detail__stat-value'>{playerInfo.space_info.book_count}</Text>
-                <Text className='detail__stat-label'>图鉴</Text>
-              </View>
-              <View className='detail__stat-item'>
-                <Text className='detail__stat-value'>{playerInfo.space_info.music_count}</Text>
-                <Text className='detail__stat-label'>音乐</Text>
-              </View>
-            </View>
-          </View>
+          )}
         </View>
       )}
 

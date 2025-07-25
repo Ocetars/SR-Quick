@@ -3,6 +3,8 @@ import Taro, { useLoad } from '@tarojs/taro'
 import { useState } from 'react'
 import { getPlayerInfo } from '../../utils/api'
 import { showLoading, hideLoading, showError } from '../../utils/ui'
+import { useUser, useUserData } from '../../stores/userStore'
+import { userAuthAPI, userDataAPI, handleApiError } from '../../utils/userAPI'
 import type { PlayerInfo } from '../../types/APIinfo'
 import './index.scss'
 
@@ -11,6 +13,18 @@ export default function Detail() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string>('')
   const [uid, setUid] = useState<string>('')
+  
+  // 用户状态
+  const { 
+    user, 
+    isLoggedIn, 
+    currentAccount, 
+    gameAccounts,
+    addGameAccount 
+  } = useUser()
+  
+  // 数据同步状态
+  const { syncCharacters, isSyncing } = useUserData()
 
   useLoad(() => {
     console.log('Player info page loaded.')
@@ -51,6 +65,115 @@ export default function Detail() {
       setLoading(false)
       hideLoading()
     }
+  }
+
+  // 添加游戏账号到用户
+  const handleAddGameAccount = async () => {
+    if (!isLoggedIn) {
+      Taro.showModal({
+        title: '需要登录',
+        content: '添加游戏账号需要先登录，是否前往登录？',
+        success: (res) => {
+          if (res.confirm) {
+            Taro.navigateTo({
+              url: '/pages/user/index'
+            })
+          }
+        }
+      })
+      return
+    }
+
+    if (!playerInfo) {
+      Taro.showToast({
+        title: '请先查询玩家信息',
+        icon: 'error'
+      })
+      return
+    }
+
+    try {
+      const isFirstAccount = gameAccounts.length === 0
+      
+      await addGameAccount({
+        uid: playerInfo.uid,
+        nickname: playerInfo.nickname,
+        level: playerInfo.level,
+        world_level: playerInfo.world_level,
+        is_primary: isFirstAccount // 第一个账号设为主账号
+      })
+      
+    } catch (error) {
+      console.error('添加游戏账号失败:', error)
+    }
+  }
+
+  // 同步角色数据到云端
+  const handleSyncData = async () => {
+    if (!isLoggedIn) {
+      Taro.showModal({
+        title: '需要登录',
+        content: '数据同步需要先登录，是否前往登录？',
+        success: (res) => {
+          if (res.confirm) {
+            Taro.navigateTo({
+              url: '/pages/user/index'
+            })
+          }
+        }
+      })
+      return
+    }
+
+    if (!playerInfo) {
+      Taro.showToast({
+        title: '请先查询玩家信息',
+        icon: 'error'
+      })
+      return
+    }
+
+    try {
+      // 检查用户是否已绑定此UID
+      const hasAccount = gameAccounts.some(account => account.uid === playerInfo.uid)
+      
+      if (!hasAccount) {
+        Taro.showModal({
+          title: '添加游戏账号',
+          content: '需要先将此账号添加到你的游戏账号列表中，是否添加？',
+          success: async (res) => {
+            if (res.confirm) {
+              await handleAddGameAccount()
+              // 添加成功后再同步数据
+              setTimeout(() => {
+                syncData()
+              }, 1000)
+            }
+          }
+        })
+        return
+      }
+
+      await syncData()
+    } catch (error) {
+      console.error('数据同步失败:', error)
+    }
+  }
+
+  // 执行数据同步
+  const syncData = async () => {
+    if (!playerInfo) return
+
+    try {
+      await syncCharacters(playerInfo.uid, true)
+    } catch (error) {
+      console.error('同步失败:', error)
+    }
+  }
+
+  // 检查当前UID是否已被用户绑定
+  const isCurrentUserAccount = () => {
+    return isLoggedIn && playerInfo && gameAccounts.some(account => account.uid === playerInfo.uid)
   }
 
   const goBack = () => {
@@ -117,10 +240,43 @@ export default function Detail() {
 
       {playerInfo && (
         <View className='detail__content'>
+          {/* 用户操作区域 */}
+          {isLoggedIn && (
+            <View className='detail__user-actions'>
+              {!isCurrentUserAccount() ? (
+                <Button 
+                  className='detail__action-btn detail__action-btn--primary'
+                  onClick={handleAddGameAccount}
+                >
+                  <Text className='detail__action-icon'>➕</Text>
+                  <Text>添加到我的账号</Text>
+                </Button>
+              ) : (
+                <View className='detail__account-info'>
+                  <Text className='detail__account-badge'>✓ 已绑定账号</Text>
+                  <Button 
+                    className='detail__action-btn detail__action-btn--sync'
+                    onClick={handleSyncData}
+                    loading={isSyncing}
+                    disabled={isSyncing}
+                  >
+                    <Text className='detail__action-icon'>🔄</Text>
+                    <Text>{isSyncing ? '同步中...' : '同步角色数据'}</Text>
+                  </Button>
+                </View>
+              )}
+            </View>
+          )}
+
           {/* 基本信息卡片 */}
           <View className='detail__card'>
             <View className='detail__card-header'>
               <Text className='detail__card-title'>基本信息</Text>
+              {isCurrentUserAccount() && (
+                <View className='detail__card-badge'>
+                  <Text className='detail__card-badge-text'>我的账号</Text>
+                </View>
+              )}
             </View>
             <View className='detail__player-basic'>
               <View className='detail__avatar-section'>

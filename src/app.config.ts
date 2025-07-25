@@ -1,7 +1,12 @@
 export default defineAppConfig({
   pages: [
     'pages/index/index',
-    'pages/detail/index'
+    'pages/detail/index',
+    'pages/user/index',
+    'pages/sync/index',
+    'pages/characters/index',
+    'pages/account/index',
+    'pages/settings/index'
   ],
   window: {
     backgroundTextStyle: 'light',

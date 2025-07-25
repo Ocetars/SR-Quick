@@ -13,6 +13,7 @@ function App({ children }: PropsWithChildren<any>) {
       env: 'prod-6g8xwsfab2293eb4'
     })
     console.log('云托管已初始化')
+    console.log('运行环境 :' + process.env.TARO_APP_ENV)
   })
 
   // children 是将要会渲染的页面

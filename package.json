@@ -20,6 +20,7 @@
     "build:jd": "taro build --type jd",
     "build:harmony-hybrid": "taro build --type harmony-hybrid",
     "dev:weapp": "npm run build:weapp -- --watch",
+    "dev:weapp:production": "taro build --type weapp --watch --mode production", 
     "dev:swan": "npm run build:swan -- --watch",
     "dev:alipay": "npm run build:alipay -- --watch",
     "dev:tt": "npm run build:tt -- --watch",
@@ -52,7 +53,8 @@
     "@tarojs/plugin-framework-react": "4.1.2",
     "@tarojs/react": "4.1.2",
     "react-dom": "^18.0.0",
-    "react": "^18.0.0"
+    "react": "^18.0.0",
+    "zustand": "^4.4.7"
   },
   "devDependencies": {
     "@babel/core": "^7.24.4",

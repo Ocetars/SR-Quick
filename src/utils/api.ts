@@ -1,5 +1,5 @@
 import { PlayerInfo, FormattedApiInfo } from '../types/APIinfo'
-import { cloudRequest } from './request'
+import { request } from './request'
 import { getMockPlayerInfo } from './mock'
 
 /**
@@ -9,7 +9,7 @@ import { getMockPlayerInfo } from './mock'
  */
 export const getPlayerInfo = async (uid: string): Promise<PlayerInfo> => {
   try {
-    const response = await cloudRequest(`/api/player/${uid}/info`)
+    const response = await request(`/api/player/${uid}/info`)
 
     if (response.statusCode === 200) {
       return response.data as PlayerInfo
@@ -29,7 +29,7 @@ export const getPlayerInfo = async (uid: string): Promise<PlayerInfo> => {
  */
 export const getAllInfo = async (uid: string): Promise<FormattedApiInfo> => {
   try {
-    const response = await cloudRequest(`/api/player/${uid}/all`)
+    const response = await request(`/api/player/${uid}/all`)
 
     if (response.statusCode === 200) {
       return response.data as FormattedApiInfo

@@ -10,7 +10,7 @@ import {
   SyncRequest,
   SyncResponse 
 } from '../types/user'
-import { request } from './request'
+import { Smartrequest } from './request'
 import Taro from '@tarojs/taro'
 
 // 基础URL配置
@@ -24,7 +24,7 @@ export const userAuthAPI = {
    * 用户登录（自动登录，基于微信云托管）
    */
   login: async (): Promise<LoginResponse> => {
-    const response = await request(`${API_BASE}/auth/login`)
+    const response = await Smartrequest(`${API_BASE}/auth/login`)
     if (response.statusCode === 200 && response.data.success) {
       return response.data.data as LoginResponse
     } else {
@@ -36,7 +36,7 @@ export const userAuthAPI = {
    * 获取用户信息
    */
   getProfile: async (): Promise<UserProfile> => {
-    const response = await request(`${API_BASE}/auth/profile`)
+    const response = await Smartrequest(`${API_BASE}/auth/profile`)
     if (response.statusCode === 200 && response.data.success) {
       return response.data.data as UserProfile
     } else {
@@ -48,7 +48,7 @@ export const userAuthAPI = {
    * 更新用户信息
    */
   updateProfile: async (data: { nickname?: string; avatar_url?: string }): Promise<User> => {
-    const response = await request(`${API_BASE}/auth/profile`, {
+    const response = await Smartrequest(`${API_BASE}/auth/profile`, {
       method: 'PUT',
       data
     })
@@ -69,7 +69,7 @@ export const userAuthAPI = {
     world_level?: number;
     is_primary?: boolean;
   }): Promise<UserGameAccount> => {
-    const response = await request(`${API_BASE}/auth/game-account`, {
+    const response = await Smartrequest(`${API_BASE}/auth/game-account`, {
       method: 'POST',
       data
     })
@@ -84,7 +84,7 @@ export const userAuthAPI = {
    * 设置主要游戏账号
    */
   setPrimaryAccount: async (uid: string): Promise<void> => {
-    const response = await request(`${API_BASE}/auth/game-account/${uid}/primary`, {
+    const response = await Smartrequest(`${API_BASE}/auth/game-account/${uid}/primary`, {
       method: 'PUT'
     })
     if (response.statusCode !== 200 || !response.data.success) {
@@ -96,7 +96,7 @@ export const userAuthAPI = {
    * 获取用户设置
    */
   getSettings: async (): Promise<UserSettings> => {
-    const response = await request(`${API_BASE}/auth/settings`)
+    const response = await Smartrequest(`${API_BASE}/auth/settings`)
     if (response.statusCode === 200 && response.data.success) {
       return response.data.data as UserSettings
     } else {
@@ -108,7 +108,7 @@ export const userAuthAPI = {
    * 更新用户设置
    */
   updateSettings: async (settings: Partial<UserSettings>): Promise<UserSettings> => {
-    const response = await request(`${API_BASE}/auth/settings`, {
+    const response = await Smartrequest(`${API_BASE}/auth/settings`, {
       method: 'PUT',
       data: settings
     })
@@ -129,7 +129,7 @@ export const userDataAPI = {
    */
   getCharacters: async (uid?: string): Promise<UserCharacterData[]> => {
     const url = uid ? `${API_BASE}/user/characters?uid=${uid}` : `${API_BASE}/user/characters`
-    const response = await request(url)
+    const response = await Smartrequest(url)
     if (response.statusCode === 200 && response.data.success) {
       return response.data.data as UserCharacterData[]
     } else {
@@ -141,7 +141,7 @@ export const userDataAPI = {
    * 同步角色数据
    */
   syncCharacters: async (data: SyncRequest): Promise<SyncResponse> => {
-    const response = await request(`${API_BASE}/user/sync`, {
+    const response = await Smartrequest(`${API_BASE}/user/sync`, {
       method: 'POST',
       data
     })
@@ -156,7 +156,7 @@ export const userDataAPI = {
    * 获取同步历史
    */
   getSyncLogs: async (limit: number = 20): Promise<SyncLog[]> => {
-    const response = await request(`${API_BASE}/user/sync-logs?limit=${limit}`)
+    const response = await Smartrequest(`${API_BASE}/user/sync-logs?limit=${limit}`)
     if (response.statusCode === 200 && response.data.success) {
       return response.data.data as SyncLog[]
     } else {
@@ -168,7 +168,7 @@ export const userDataAPI = {
    * 切换角色收藏状态
    */
   toggleCharacterFavorite: async (uid: string, characterId: string, is_favorite: boolean): Promise<void> => {
-    const response = await request(`${API_BASE}/user/characters/${uid}/${characterId}/favorite`, {
+    const response = await Smartrequest(`${API_BASE}/user/characters/${uid}/${characterId}/favorite`, {
       method: 'PUT',
       data: { is_favorite }
     })
@@ -181,7 +181,7 @@ export const userDataAPI = {
    * 删除角色数据
    */
   deleteCharacter: async (uid: string, characterId: string): Promise<void> => {
-    const response = await request(`${API_BASE}/user/characters/${uid}/${characterId}`, {
+    const response = await Smartrequest(`${API_BASE}/user/characters/${uid}/${characterId}`, {
       method: 'DELETE'
     })
     if (response.statusCode !== 200 || !response.data.success) {
@@ -193,7 +193,7 @@ export const userDataAPI = {
    * 获取用户统计信息
    */
   getStats: async (): Promise<UserStats> => {
-    const response = await request(`${API_BASE}/user/stats`)
+    const response = await Smartrequest(`${API_BASE}/user/stats`)
     if (response.statusCode === 200 && response.data.success) {
       return response.data.data as UserStats
     } else {

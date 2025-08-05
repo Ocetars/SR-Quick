@@ -63,7 +63,7 @@ export const cloudRequest = async (path: string, options?: { method?: 'GET' | 'P
 /**
  * 统一请求封装 - 根据环境自动选择本地或云托管API
  */
-export const request = async (path: string, options?: { method?: 'GET' | 'POST' | 'PUT' | 'DELETE'; data?: any }) => {
+export const Smartrequest = async (path: string, options?: { method?: 'GET' | 'POST' | 'PUT' | 'DELETE'; data?: any }) => {
   if (USE_LOCAL_API) {
     console.log(`🔧 使用本地API: ${LOCAL_API_BASE_URL}${path}`)
     return await localRequest(path, options)

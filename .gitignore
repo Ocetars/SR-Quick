@@ -12,3 +12,4 @@ project.*
 CLAUDE.md
 .vscode
 .kiro
+package-lock.json

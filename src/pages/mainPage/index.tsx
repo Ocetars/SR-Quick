@@ -1,12 +1,12 @@
 import { View, Text } from "@tarojs/components";
-import "./index.scss";
+import "./index.css";
 
 export default function MainPage() {
   return (
-    <View>
+    <View className="mainPage">
       {/* 底部信息 */}
-      <View className="main-page__footer">
-        <Text className="main-page__footer-text">愿此行，终抵群星</Text>
+      <View className="footer">
+        <Text className="footerText">愿此行，终抵群星</Text>
       </View>
     </View>
   );

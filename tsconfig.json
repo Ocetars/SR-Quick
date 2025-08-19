@@ -23,6 +23,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["./src", "./types", "./config"],
+  "include": ["./src", "./types", "./config", "api/request.ts"],
   "compileOnSave": false
 }

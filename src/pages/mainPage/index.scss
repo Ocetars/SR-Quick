@@ -1,0 +1,27 @@
+.main-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%);
+  color: #ffffff;
+  padding: 0;
+  position: relative;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+
+  // 底部信息
+  &__footer {
+    text-align: center;
+    padding: 40px 30px 50px;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__footer-text {
+    font-size: 30px;
+    color: #ffd700;
+    font-weight: 300;
+    opacity: 0.8;
+    font-style: italic;
+    letter-spacing: 1px;
+  }
+}

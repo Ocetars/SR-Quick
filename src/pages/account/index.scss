@@ -2,7 +2,7 @@
   min-height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 16px;
-  
+
   &__header {
     background: rgba(255, 255, 255, 0.95);
     border-radius: 16px;
@@ -65,7 +65,7 @@
     font-size: 36px;
     font-weight: bold;
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-    
+
     &:active {
       background: linear-gradient(135deg, #5a6fd8, #6a4190);
       transform: translateY(1px);

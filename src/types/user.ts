@@ -29,7 +29,7 @@ export interface UserGameAccount {
 // 用户设置
 export interface UserSettings {
   openid: string;
-  theme?: 'light' | 'dark' | 'auto';
+  theme?: "light" | "dark" | "auto";
   language?: string;
   auto_sync?: boolean;
   notification_enabled?: boolean;
@@ -44,8 +44,8 @@ export interface SyncLog {
   id?: number;
   openid: string;
   uid: string;
-  sync_type: 'full' | 'incremental' | 'character';
-  sync_status: 'success' | 'failed' | 'partial';
+  sync_type: "full" | "incremental" | "character";
+  sync_status: "success" | "failed" | "partial";
   characters_count?: number;
   error_message?: string;
   sync_duration?: number;
@@ -109,7 +109,7 @@ export interface UserStats {
   characters_count: number;
   favorite_characters_count: number;
   last_sync_time?: string;
-  last_sync_status?: 'success' | 'failed' | 'partial';
+  last_sync_status?: "success" | "failed" | "partial";
 }
 
 // 用户Profile数据

@@ -2,7 +2,7 @@
   padding: 16px;
   min-height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  
+
   &__header {
     display: flex;
     justify-content: space-between;
@@ -28,7 +28,7 @@
     padding: 15px 20px;
     font-size: 30px;
     font-weight: 600;
-    
+
     &:active {
       background: #5a6fd8;
     }
@@ -65,14 +65,14 @@
     color: #333;
     box-sizing: border-box;
     transition: all 0.3s ease;
-    
+
     &:focus {
       border-color: #667eea;
       background: white;
       outline: none;
       box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
     }
-    
+
     &::placeholder {
       color: #adb5bd;
       font-size: 30px;
@@ -90,12 +90,12 @@
     font-weight: bold;
     transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-    
+
     &:active {
       background: linear-gradient(135deg, #5a6fd8, #6a4190);
       transform: translateY(1px);
     }
-    
+
     &:disabled {
       background: #adb5bd;
       color: #6c757d;
@@ -105,7 +105,9 @@
     }
   }
 
-  &__loading, &__error, &__empty {
+  &__loading,
+  &__error,
+  &__empty {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -133,7 +135,7 @@
     padding: 15px 25px;
     font-size: 30px;
     font-weight: 600;
-    
+
     &:active {
       background: #c0392b;
     }
@@ -304,7 +306,7 @@
     align-items: center;
     padding: 15px 0;
     border-bottom: 1px solid #f0f0f0;
-    
+
     &:last-child {
       border-bottom: none;
     }
@@ -369,7 +371,7 @@
     border-radius: 12px;
     transition: all 0.3s ease;
     border: 2px solid transparent;
-    
+
     &:active {
       transform: scale(0.95);
       border-color: #667eea;
@@ -403,7 +405,7 @@
     font-weight: bold;
     margin-top: 24px;
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-    
+
     &:active {
       background: linear-gradient(135deg, #5a6fd8, #6a4190);
       transform: translateY(1px);
@@ -415,15 +417,15 @@
 @media (max-width: 375px) {
   .detail {
     padding: 12px;
-    
+
     &__header {
       padding: 20px 20px;
     }
-    
+
     &__title {
       font-size: 36px;
     }
-    
+
     &__refresh-btn {
       font-size: 28px;
       padding: 12px 18px;
@@ -441,7 +443,7 @@
     &__input {
       padding: 18px;
       font-size: 30px;
-      
+
       &::placeholder {
         font-size: 28px;
       }
@@ -451,56 +453,57 @@
       font-size: 32px;
       padding: 18px;
     }
-    
+
     &__card-title {
       font-size: 32px;
     }
-    
+
     &__avatar-icon {
       width: 80px;
       height: 80px;
     }
-    
+
     &__avatar-name {
       font-size: 34px;
     }
-    
+
     &__avatar-id {
       font-size: 28px;
     }
-    
-    &__label, &__value {
+
+    &__label,
+    &__value {
       font-size: 30px;
     }
-    
+
     &__stats-grid {
       grid-template-columns: repeat(2, 1fr);
       gap: 18px;
       padding: 20px;
     }
-    
+
     &__stat-item {
       padding: 25px 15px;
     }
-    
+
     &__stat-value {
       font-size: 42px;
     }
-    
+
     &__stat-label {
       font-size: 28px;
     }
-    
-    &__signature-text, &__signature-label {
+
+    &__signature-text,
+    &__signature-label {
       font-size: 30px;
     }
-    
+
     &__back-btn {
       font-size: 32px;
       padding: 20px;
     }
-    
-    
+
     &__action-btn {
       display: flex;
       align-items: center;
@@ -570,4 +573,4 @@
       box-shadow: 0 3px 10px rgba(40, 167, 69, 0.3);
     }
   }
-} 
+}

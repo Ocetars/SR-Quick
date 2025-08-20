@@ -8,10 +8,4 @@ export default defineAppConfig({
     // "pages/account/index",
     // "pages/settings/index",
   ],
-  window: {
-    backgroundTextStyle: "light",
-    navigationBarBackgroundColor: "#1a1a2e",
-    navigationBarTitleText: "星练度",
-    navigationBarTextStyle: "white",
-  },
 });

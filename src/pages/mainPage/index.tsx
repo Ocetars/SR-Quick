@@ -6,7 +6,7 @@ export default function MainPage() {
     <View className="mainPage">
       {/* 底部信息 */}
       <View className="footer">
-        <Text className="footerText">愿此行，终抵群星</Text>
+        <Text className="footerText">群星</Text>
       </View>
     </View>
   );

@@ -14,7 +14,7 @@ const LOCAL_API_BASE_URL = process.env.TARO_APP_API_BASE_URL;
  */
 export const localRequest = async (
   path: string,
-  options?: { method?: "GET" | "POST" | "PUT" | "DELETE"; data?: any },
+  options?: { method?: "GET" | "POST" | "PUT" | "DELETE"; data?: any }
 ) => {
   const url = `${LOCAL_API_BASE_URL}${path}`;
   const { method = "GET", data } = options || {};
@@ -25,7 +25,7 @@ export const localRequest = async (
     data,
     header: {
       "Content-Type": "application/json",
-      "X-Frontend-Env": process.env.TARO_APP_ENV || "unknown",
+      "X-Frontend-Env": process.env.TARO_APP_ENV,
       "X-Frontend-API-Mode": "local",
       "X-Frontend-API-URL": LOCAL_API_BASE_URL,
     },
@@ -38,7 +38,7 @@ export const localRequest = async (
  */
 export const cloudRequest = async (
   path: string,
-  options?: { method?: "GET" | "POST" | "PUT" | "DELETE"; data?: any },
+  options?: { method?: "GET" | "POST" | "PUT" | "DELETE"; data?: any }
 ) => {
   const { method = "GET", data } = options || {};
   const CLOUD_CONFIG = {
@@ -65,7 +65,7 @@ export const cloudRequest = async (
  */
 export const Smartrequest = async (
   path: string,
-  options?: { method?: "GET" | "POST" | "PUT" | "DELETE"; data?: any },
+  options?: { method?: "GET" | "POST" | "PUT" | "DELETE"; data?: any }
 ) => {
   if (USE_LOCAL_API) {
     console.log(`🔧 使用本地API: ${LOCAL_API_BASE_URL}${path}`);

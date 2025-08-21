@@ -1,4 +1,5 @@
 import { Smartrequest } from "./request";
+import type { HealthResponse, DebugIpResponse } from "@/types/api";
 
 /**
  * 系统调试相关 API
@@ -7,13 +8,17 @@ import { Smartrequest } from "./request";
 /**
  * 健康检查
  */
-export const getHealth = () => {
-  return Smartrequest("/health", { method: "GET" });
+export const getHealth = async () => {
+  const res = await Smartrequest<HealthResponse>("/health", { method: "GET" });
+  return res.data;
 };
 
 /**
  * 调试IP信息
  */
-export const getDebugIp = () => {
-  return Smartrequest("/debug/ip", { method: "GET" });
+export const getDebugIp = async () => {
+  const res = await Smartrequest<DebugIpResponse>("/debug/ip", {
+    method: "GET",
+  });
+  return res.data;
 };

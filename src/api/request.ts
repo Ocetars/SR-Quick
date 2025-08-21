@@ -12,14 +12,14 @@ const LOCAL_API_BASE_URL = process.env.TARO_APP_API_BASE_URL;
 /**
  * 本地API请求封装
  */
-export const localRequest = async (
+export const localRequest = async <T = any>(
   path: string,
   options?: { method?: "GET" | "POST" | "PUT" | "DELETE"; data?: any }
 ) => {
   const url = `${LOCAL_API_BASE_URL}${path}`;
   const { method = "GET", data } = options || {};
 
-  return await Taro.request({
+  return await Taro.request<T>({
     url,
     method,
     data,
@@ -36,7 +36,7 @@ export const localRequest = async (
 /**
  * 云托管请求封装
  */
-export const cloudRequest = async (
+export const cloudRequest = async <T = any>(
   path: string,
   options?: { method?: "GET" | "POST" | "PUT" | "DELETE"; data?: any }
 ) => {
@@ -45,7 +45,7 @@ export const cloudRequest = async (
     env: process.env.TARO_APP_CLOUD_ENV,
     serviceName: process.env.TARO_APP_CLOUD_SERVICE,
   };
-  return await Taro.cloud.callContainer({
+  return await Taro.cloud.callContainer<T>({
     path,
     method: method as any, // 解决类型兼容问题
     data,
@@ -63,15 +63,15 @@ export const cloudRequest = async (
 /**
  * 统一请求封装 - 根据环境自动选择本地或云托管API
  */
-export const Smartrequest = async (
+export const Smartrequest = async <T = any>(
   path: string,
   options?: { method?: "GET" | "POST" | "PUT" | "DELETE"; data?: any }
 ) => {
   if (USE_LOCAL_API) {
     console.log(`🔧 使用本地API: ${LOCAL_API_BASE_URL}${path}`);
-    return await localRequest(path, options);
+    return await localRequest<T>(path, options);
   } else {
     console.log(`☁️ 使用云托管API: ${path}`);
-    return await cloudRequest(path, options);
+    return await cloudRequest<T>(path, options);
   }
 };

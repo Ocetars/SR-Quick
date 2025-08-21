@@ -138,24 +138,24 @@ export default function MainPage() {
       <View className="top">
         <Text className="title">{topTitle}</Text>
         {needBind ? (
-          <View className="bindArea">
+          <View className="bindCard">
             <Input
-              className="uidInput"
+              className="inputField"
               placeholder="请输入 UID"
               value={uidInput}
               onInput={(e) => setUidInput((e.detail as any).value)}
               maxlength={12}
               type="number"
             />
-            <Button className="bindBtn" disabled={loading} onClick={onBind}>
+            <Button className="btnPrimary" disabled={loading} onClick={onBind}>
               绑定
             </Button>
           </View>
         ) : (
           <View className="boundActions">
-            <Text className="uidText">UID：{player?.uid || mainUid}</Text>
+            <Text className="uidBadge">UID：{player?.uid || mainUid}</Text>
             <Button
-              className="refreshBtn"
+              className="btnSecondary"
               disabled={loading}
               onClick={onRefreshLatest}
             >
@@ -174,17 +174,23 @@ export default function MainPage() {
             <Text>绑定 UID 后展示角色柜</Text>
           </View>
         ) : (
-          <ScrollView scrollY className="grid">
-            {characters?.map((c) => (
-              <View
-                key={c.id}
-                className="card"
-                onClick={() => onEnterDetail(c.id)}
-              >
-                <Image className="avatar" src={c.icon} mode="aspectFill" />
-                <Text className="name">{c.name}</Text>
-              </View>
-            ))}
+          <ScrollView scrollY className="characterScroll">
+            <View className="characterGrid">
+              {characters?.map((c) => (
+                <View
+                  key={c.id}
+                  className="characterCard"
+                  onClick={() => onEnterDetail(c.id)}
+                >
+                  <Image
+                    className="characterAvatar"
+                    src={c.icon}
+                    mode="aspectFill"
+                  />
+                  <Text className="characterName">{c.name}</Text>
+                </View>
+              ))}
+            </View>
           </ScrollView>
         )}
       </View>

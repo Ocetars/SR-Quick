@@ -2,9 +2,6 @@
 .page {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  background-color: #fff;
-  color: #111;
 }
 
 .top {
@@ -17,27 +14,54 @@
 }
 
 .title {
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 700;
 }
 
-.bindArea {
+.bindCard {
   display: flex;
   gap: 12px;
+  background: #ffffff;
+  border: 1px solid #e5e5ea;
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.uidInput {
+.inputField {
   flex: 1;
-  border: 1px solid #e5e5e5;
-  padding: 10px 12px;
-  border-radius: 8px;
+  border: 1px solid #e5e5ea;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #ffffff;
+  font-size: 16px;
+  color: #1c1c1e;
 }
 
-.bindBtn,
-.refreshBtn {
-  background-color: #111;
+.inputField:focus {
+  border-color: #007aff;
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.12);
+}
+
+.btnPrimary {
+  background: #007aff;
   color: #fff;
-  border-radius: 8px;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 122, 255, 0.25);
+}
+
+.btnSecondary {
+  background: transparent;
+  color: #007aff;
+  border: 1px solid #007aff;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .boundActions {
@@ -46,8 +70,12 @@
   justify-content: space-between;
 }
 
-.uidText {
-  color: #666;
+.uidBadge {
+  color: #636366;
+  background: #f2f2f7;
+  border: 1px solid #e5e5ea;
+  padding: 6px 10px;
+  border-radius: 8px;
 }
 
 .bottom {
@@ -67,35 +95,44 @@
   color: #999;
 }
 
-.grid {
-  padding: 12px 16px 24px;
+.characterScroll {
+  /* 确保 ScrollView 内部内容宽度不被压缩，居中显示 */
+  width: 100%;
 }
 
-.card {
-  display: inline-flex;
-  width: 31%;
-  margin-right: 3.5%;
-  margin-bottom: 12px;
+.characterGrid {
+  padding: 12px 16px 24px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  justify-items: center;
+}
+
+.characterCard {
+  display: flex;
+  width: 80%;
   flex-direction: column;
   align-items: center;
-  border: 1px solid #eee;
-  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid #e5e5ea;
+  border-radius: 16px;
   padding: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  text-align: center;
 }
 
-.card:nth-child(3n) {
-  margin-right: 0;
-}
+/* 由 grid 的 gap 控制间距，无需 nth-child 规则 */
 
-.avatar {
+.characterAvatar {
   width: 100%;
-  height: 92px;
-  border-radius: 8px;
+  height: 120px;
+  border-radius: 12px;
   background: #f7f7f7;
 }
 
-.name {
+.characterName {
   margin-top: 8px;
   font-size: 14px;
-  color: #222;
+  color: #1c1c1e;
+  font-weight: 600;
 }

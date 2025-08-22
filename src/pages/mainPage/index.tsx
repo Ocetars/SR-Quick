@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  Input,
-  Button,
-  Image,
-  ScrollView,
-} from "@tarojs/components";
+import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import "./index.css";
 import {
@@ -14,13 +7,15 @@ import {
   getPlayerSummary,
   refreshPlayerByUid,
 } from "@/api/user";
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import type { PlayerInfo } from "@/types/mihomo";
 import type {
   UserTypeData,
   PlayerSummaryResponse,
   CharacterSummary,
 } from "@/types/api";
+import TopSection from "./components/TopSection";
+import CharacterSection from "./components/CharacterSection";
 
 type UserTypeResponse = UserTypeData;
 
@@ -31,12 +26,6 @@ export default function MainPage() {
   const [uidInput, setUidInput] = useState("");
   const [player, setPlayer] = useState<PlayerInfo | null>(null);
   const [characters, setCharacters] = useState<CharacterSummary[]>([]);
-
-  const topTitle = useMemo(() => {
-    if (needBind) return "绑定 UID";
-    if (player) return `${player.nickname} (UID: ${player.uid})`;
-    return mainUid ? `UID: ${mainUid}` : "";
-  }, [needBind, player, mainUid]);
 
   const fetchUserAndMaybeSummary = useCallback(async () => {
     setLoading(true);
@@ -135,65 +124,21 @@ export default function MainPage() {
 
   return (
     <View className="page">
-      <View className="top">
-        <Text className="title">{topTitle}</Text>
-        {needBind ? (
-          <View className="bindCard">
-            <Input
-              className="inputField"
-              placeholder="请输入 UID"
-              value={uidInput}
-              onInput={(e) => setUidInput((e.detail as any).value)}
-              maxlength={12}
-              type="number"
-            />
-            <Button className="btnPrimary" disabled={loading} onClick={onBind}>
-              绑定
-            </Button>
-          </View>
-        ) : (
-          <View className="boundActions">
-            <Text className="uidBadge">UID：{player?.uid || mainUid}</Text>
-            <Button
-              className="btnSecondary"
-              disabled={loading}
-              onClick={onRefreshLatest}
-            >
-              获取最新数据
-            </Button>
-          </View>
-        )}
-      </View>
-
-      <View className="bottom">
-        <View className="sectionTitle">
-          <Text>角色柜</Text>
-        </View>
-        {needBind ? (
-          <View className="placeholder">
-            <Text>绑定 UID 后展示角色柜</Text>
-          </View>
-        ) : (
-          <ScrollView scrollY className="characterScroll">
-            <View className="characterGrid">
-              {characters?.map((c) => (
-                <View
-                  key={c.id}
-                  className="characterCard"
-                  onClick={() => onEnterDetail(c.id)}
-                >
-                  <Image
-                    className="characterAvatar"
-                    src={c.icon}
-                    mode="aspectFill"
-                  />
-                  <Text className="characterName">{c.name}</Text>
-                </View>
-              ))}
-            </View>
-          </ScrollView>
-        )}
-      </View>
+      <TopSection
+        needBind={needBind}
+        player={player}
+        mainUid={mainUid}
+        uidInput={uidInput}
+        loading={loading}
+        onUidInputChange={setUidInput}
+        onBind={onBind}
+        onRefreshLatest={onRefreshLatest}
+      />
+      <CharacterSection
+        needBind={needBind}
+        characters={characters}
+        onEnterDetail={onEnterDetail}
+      />
     </View>
   );
 }

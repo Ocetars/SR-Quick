@@ -1,5 +1,7 @@
 import { View, Text, Input, Button, Image } from "@tarojs/components";
 import type { PlayerInfo } from "@/types/mihomo";
+import refreshIcon from "@/assets/refresh.png";
+import "./TopSection.css";
 
 interface TopSectionProps {
   needBind: boolean;
@@ -25,7 +27,7 @@ export default function TopSection({
   return (
     <View className="top">
       {needBind ? (
-        <View className="playerCard cardContent">
+        <View className="playerCard">
           <Text className="cardTitle">绑定 UID</Text>
           <View className="bindForm">
             <Input
@@ -42,7 +44,7 @@ export default function TopSection({
           </View>
         </View>
       ) : (
-        <View className="playerCard cardContent">
+        <View className="playerCard">
           <View className="avatarContainer">
             {player?.avatar?.icon ? (
               <Image
@@ -57,16 +59,22 @@ export default function TopSection({
             )}
           </View>
           <View className="infoSection">
-            <Text className="nickname">{player?.nickname || "未知用户"}</Text>
+            <View className="nameLevel">
+              <Text className="nickname">{player?.nickname || "未知用户"}</Text>
+              <Text className="level">Lv. {player?.level || "未知"}</Text>
+            </View>
             <Text className="uid">UID: {player?.uid || mainUid}</Text>
-            <Text className="level">等级 {player?.level || "未知"}</Text>
           </View>
           <Button
             className="btnRefresh"
             disabled={loading}
             onClick={onRefreshLatest}
           >
-            刷新数据
+            <Image
+              src={refreshIcon}
+              className="icon-refresh"
+              style={{ width: 24, height: 24 }}
+            />
           </Button>
         </View>
       )}

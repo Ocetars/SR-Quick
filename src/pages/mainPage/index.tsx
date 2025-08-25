@@ -1,4 +1,4 @@
-import { View } from "@tarojs/components";
+import { View, Image } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import "./index.css";
 import {
@@ -16,6 +16,8 @@ import type {
 } from "@/types/api";
 import TopSection from "./components/TopSection";
 import CharacterSection from "./components/CharacterSection";
+
+import background from "@/assets/bg1.jpg";
 
 type UserTypeResponse = UserTypeData;
 
@@ -124,21 +126,24 @@ export default function MainPage() {
 
   return (
     <View className="page">
-      <TopSection
-        needBind={needBind}
-        player={player}
-        mainUid={mainUid}
-        uidInput={uidInput}
-        loading={loading}
-        onUidInputChange={setUidInput}
-        onBind={onBind}
-        onRefreshLatest={onRefreshLatest}
-      />
-      <CharacterSection
-        needBind={needBind}
-        characters={characters}
-        onEnterDetail={onEnterDetail}
-      />
+      <Image className="background" src={background} mode="aspectFill" />
+      <View className="content">
+        <TopSection
+          needBind={needBind}
+          player={player}
+          mainUid={mainUid}
+          uidInput={uidInput}
+          loading={loading}
+          onUidInputChange={setUidInput}
+          onBind={onBind}
+          onRefreshLatest={onRefreshLatest}
+        />
+        <CharacterSection
+          needBind={needBind}
+          characters={characters}
+          onEnterDetail={onEnterDetail}
+        />
+      </View>
     </View>
   );
 }

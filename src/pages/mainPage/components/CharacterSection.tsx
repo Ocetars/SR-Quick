@@ -1,5 +1,6 @@
 import { View, Text, Image, ScrollView } from "@tarojs/components";
 import type { CharacterSummary } from "@/types/api";
+import "./CharacterSection.css";
 
 interface CharacterSectionProps {
   needBind: boolean;

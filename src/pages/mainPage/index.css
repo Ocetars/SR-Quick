@@ -1,225 +1,36 @@
-/* 现代黑白优雅风格 */
+/* 主页面样式 */
 .page {
   display: flex;
   flex-direction: column;
+  position: relative;
+  min-height: 100vh;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.5;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
 }
 
 .top {
   flex: 0 0 20vh;
-  padding: 24px;
+  padding: 40px 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-
-/* 主要的用户信息卡片 */
-.playerCard {
-  background: #faf9f7;
-  border-radius: 9999px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.04);
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.cardContent {
-  padding: 48px 36px;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  grid-auto-rows: min-content;
-  gap: 20px;
-  align-items: center;
-}
-
-/* 绑定状态的标题 */
-.cardTitle {
-  font-size: 20px;
-  font-weight: 700;
-  color: #2c2c2e;
-  text-align: center;
-}
-
-/* 绑定表单样式 */
-.bindForm {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-}
-
-.inputField {
-  flex: 1;
-  border: 2px solid #e5e5ea;
-  padding: 16px 20px;
-  border-radius: 9999px;
-  background: #ffffff;
-  font-size: 18px;
-  color: #1c1c1e;
-  transition: all 0.2s ease;
-}
-
-.inputField:focus {
-  border-color: #007aff;
-  box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
-  outline: none;
-}
-
-.btnPrimary {
-  background: linear-gradient(135deg, #007aff 0%, #5856d6 100%);
-  color: #fff;
-  border: none;
-  border-radius: 9999px;
-  padding: 16px 26px;
-  font-size: 18px;
-  font-weight: 700;
-  box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
-  transition: all 0.2s ease;
-  white-space: nowrap;
-}
-
-.btnPrimary:active {
-  transform: translateY(1px);
-  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
-}
-
-/* 用户信息展示区域 */
-.playerInfo {
-  display: contents;
-}
-
-.avatarSection {
-  display: none;
-}
-
-.avatarContainer {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  overflow: hidden;
-  background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
-  border: 4px solid #ffffff;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  margin-right: 20px;
-}
-
-.avatar {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.avatarPlaceholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
-}
-
-.avatarPlaceholderText {
-  font-size: 14px;
-  color: #999;
-  font-weight: 600;
-}
-
-.infoSection {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.nickname {
-  font-size: 36px;
-  font-weight: 800;
-  color: #1c1c1e;
-  line-height: 1.2;
-}
-
-.uid {
-  font-size: 26px;
-  color: #8e8e93;
-  font-weight: 600;
-}
-
-.level {
-  font-size: 28px;
-  color: #007aff;
-  font-weight: 700;
-}
-
-.btnRefresh {
-  background: #ffffff;
-  color: #007aff;
-  border: 2px solid #007aff;
-  border-radius: 9999px;
-  padding: 14px 22px;
-  font-size: 16px;
-  font-weight: 700;
-  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.15);
-  transition: all 0.2s ease;
-  align-self: center;
-}
-
-.btnRefresh:active {
-  background: #f0f8ff;
-  transform: translateY(1px);
 }
 
 .bottom {
   flex: 1;
   display: flex;
   flex-direction: column;
-}
-
-.sectionTitle {
-  padding: 12px 16px;
-  color: #333;
-  border-bottom: 1px solid #f2f2f2;
-}
-
-.placeholder {
-  padding: 24px;
-  color: #999;
-}
-
-.characterScroll {
-  /* 确保 ScrollView 内部内容宽度不被压缩，居中显示 */
-  width: 100%;
-}
-
-.characterGrid {
-  padding: 12px 16px 24px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  justify-items: center;
-}
-
-.characterCard {
-  display: flex;
-  width: 80%;
-  flex-direction: column;
-  align-items: center;
-  background: #ffffff;
-  border: 1px solid #e5e5ea;
-  border-radius: 16px;
-  padding: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  text-align: center;
-}
-
-/* 由 grid 的 gap 控制间距，无需 nth-child 规则 */
-
-.characterAvatar {
-  width: 100%;
-  height: 120px;
-  border-radius: 12px;
-  background: #f7f7f7;
-}
-
-.characterName {
-  margin-top: 8px;
-  font-size: 14px;
-  color: #1c1c1e;
-  font-weight: 600;
 }

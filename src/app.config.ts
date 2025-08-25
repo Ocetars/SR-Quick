@@ -8,4 +8,9 @@ export default defineAppConfig({
     // "pages/account/index",
     // "pages/settings/index",
   ],
+  window: {
+    navigationBarBackgroundColor: "#ffffff",
+    navigationBarTextStyle: "black",
+    backgroundTextStyle: "light",
+  },
 });

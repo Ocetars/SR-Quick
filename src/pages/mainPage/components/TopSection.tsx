@@ -2,6 +2,7 @@ import { View, Text, Input, Button, Image } from "@tarojs/components";
 import type { PlayerInfo } from "@/types/mihomo";
 import refreshIcon from "@/assets/refresh.png";
 import "./TopSection.css";
+import ResolvedImage from "@/utils/ResolvedImage";
 
 interface TopSectionProps {
   needBind: boolean;
@@ -47,7 +48,7 @@ export default function TopSection({
         <View className="playerCard">
           <View className="avatarContainer">
             {player?.avatar?.icon ? (
-              <Image
+              <ResolvedImage
                 className="avatar"
                 src={player.avatar.icon}
                 mode="aspectFill"

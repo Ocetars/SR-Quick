@@ -1,6 +1,7 @@
 import { View, Text, Image, ScrollView } from "@tarojs/components";
 import type { CharacterSummary } from "@/types/api";
 import "./CharacterSection.css";
+import ResolvedImage from "@/utils/ResolvedImage";
 
 interface CharacterSectionProps {
   needBind: boolean;
@@ -31,7 +32,7 @@ export default function CharacterSection({
                 className="characterCard"
                 onClick={() => onEnterDetail(c.id)}
               >
-                <Image
+                <ResolvedImage
                   className="characterAvatar"
                   src={c.icon}
                   mode="aspectFill"

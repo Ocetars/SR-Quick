@@ -1,4 +1,4 @@
-import { View, Image } from "@tarojs/components";
+import { View, Image, ScrollView } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import "./index.css";
 import {

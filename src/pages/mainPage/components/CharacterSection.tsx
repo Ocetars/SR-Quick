@@ -17,31 +17,31 @@ export default function CharacterSection({
   return (
     <View className="bottom">
       <View className="sectionTitle">
-        <Text>角色柜</Text>
+        <Text> </Text>
       </View>
       {needBind ? (
         <View className="placeholder">
           <Text>绑定 UID 后展示角色柜</Text>
         </View>
       ) : (
-        <ScrollView scrollY className="characterScroll">
-          <View className="characterGrid">
-            {characters?.map((c) => (
-              <View
-                key={c.id}
-                className="characterCard"
-                onClick={() => onEnterDetail(c.id)}
-              >
+        <View className="characterGrid">
+          {characters?.map((c) => (
+            <View
+              key={c.id}
+              className="characterCard"
+              onClick={() => onEnterDetail(c.id)}
+            >
+              <View className="avatarSquare">
                 <ResolvedImage
                   className="characterAvatar"
                   src={c.icon}
                   mode="aspectFill"
                 />
-                <Text className="characterName">{c.name}</Text>
               </View>
-            ))}
-          </View>
-        </ScrollView>
+              {/* <Text className="characterName">{c.name}</Text> */}
+            </View>
+          ))}
+        </View>
       )}
     </View>
   );

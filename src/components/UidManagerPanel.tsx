@@ -1,5 +1,6 @@
 import { View, Text, Input, Button, ScrollView } from "@tarojs/components";
 import Taro from "@tarojs/taro";
+import { useEffect, useState } from "react";
 import type { UserBoundItem } from "@/types/api";
 
 interface UidManagerPanelProps {
@@ -202,11 +203,50 @@ export default function UidManagerPanel(props: UidManagerPanelProps) {
     onClose,
   } = props;
 
-  if (!visible) return null;
+  // 动画：进入/退出
+  const ANIM_MS = 300;
+  const [showing, setShowing] = useState(visible);
+  const [isEntering, setIsEntering] = useState(false);
+
+  useEffect(() => {
+    if (visible) {
+      if (showing) {
+        // 已挂载时再次进入
+        requestAnimationFrame(() => setIsEntering(true));
+        return;
+      }
+      setShowing(true);
+      // 下一帧触发进入动画
+      requestAnimationFrame(() => setIsEntering(true));
+      return;
+    }
+    if (!showing) return;
+    // 触发退出动画
+    setIsEntering(false);
+    const timer = setTimeout(() => setShowing(false), ANIM_MS);
+    return () => clearTimeout(timer);
+  }, [visible]);
+
+  if (!showing) return null;
+
+  const maskStyle = {
+    ...styles.mask,
+    opacity: isEntering ? 1 : 0,
+    transition: `opacity ${ANIM_MS}ms ease`,
+  } as const;
+
+  const panelStyle = {
+    ...styles.panel,
+    opacity: isEntering ? 1 : 0,
+    transform: isEntering
+      ? "translateY(0) scale(1)"
+      : "translateY(12px) scale(0.98)",
+    transition: `transform ${ANIM_MS}ms ease, opacity ${ANIM_MS}ms ease`,
+  } as const;
 
   return (
-    <View style={styles.mask} onClick={onClose}>
-      <View style={styles.panel} onClick={(e) => e.stopPropagation()}>
+    <View style={maskStyle} onClick={onClose}>
+      <View style={panelStyle} onClick={(e) => e.stopPropagation()}>
         <View style={styles.header}>
           <Text style={styles.title}>查询新的UID</Text>
           <View style={styles.close} onClick={onClose}>

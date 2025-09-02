@@ -204,6 +204,7 @@ export default function MainPage() {
           onRefreshLatest={onRefreshLatest}
           onUidClick={openUidPanel}
         />
+
         <CharacterSection
           needBind={needBind}
           characters={characters}

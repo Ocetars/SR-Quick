@@ -24,24 +24,26 @@ export default function CharacterSection({
           <Text>绑定 UID 后展示角色柜</Text>
         </View>
       ) : (
-        <View className="characterGrid">
-          {characters?.map((c) => (
-            <View
-              key={c.id}
-              className="characterCard"
-              onClick={() => onEnterDetail(c.id)}
-            >
-              <View className="avatarSquare">
-                <ResolvedImage
-                  className="characterAvatar"
-                  src={c.icon}
-                  mode="aspectFill"
-                />
+        <ScrollView scrollY style={{ flex: 1, minHeight: 0 }}>
+          <View className="characterGrid">
+            {characters?.map((c) => (
+              <View
+                key={c.id}
+                className="characterCard"
+                onClick={() => onEnterDetail(c.id)}
+              >
+                <View className="avatarSquare">
+                  <ResolvedImage
+                    className="characterAvatar"
+                    src={c.icon}
+                    mode="aspectFill"
+                  />
+                </View>
+                {/* <Text className="characterName">{c.name}</Text> */}
               </View>
-              {/* <Text className="characterName">{c.name}</Text> */}
-            </View>
-          ))}
-        </View>
+            ))}
+          </View>
+        </ScrollView>
       )}
     </View>
   );

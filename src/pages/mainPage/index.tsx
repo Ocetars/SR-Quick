@@ -1,4 +1,4 @@
-import { View, Image, ScrollView } from "@tarojs/components";
+import { View, Image } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import "./index.css";
 import {
@@ -13,9 +13,11 @@ import type {
   UserTypeData,
   PlayerSummaryResponse,
   CharacterSummary,
+  UserBoundItem,
 } from "@/types/api";
 import TopSection from "./components/TopSection";
 import CharacterSection from "./components/CharacterSection";
+import UidManagerPanel from "@/components/UidManagerPanel";
 
 import background from "@/assets/bg1.jpg";
 
@@ -28,6 +30,9 @@ export default function MainPage() {
   const [uidInput, setUidInput] = useState("");
   const [player, setPlayer] = useState<PlayerInfo | null>(null);
   const [characters, setCharacters] = useState<CharacterSummary[]>([]);
+  const [uidPanelVisible, setUidPanelVisible] = useState(false);
+  const [boundUids, setBoundUids] = useState<UserBoundItem[]>([]);
+  const [newUidInput, setNewUidInput] = useState("");
 
   const fetchUserAndMaybeSummary = useCallback(async () => {
     setLoading(true);
@@ -40,9 +45,11 @@ export default function MainPage() {
         setMainUid("");
         setPlayer(null);
         setCharacters([]);
+        setBoundUids([]);
       } else if (hasBound && data.main_uid) {
         setNeedBind(false);
         setMainUid(data.main_uid);
+        setBoundUids(data.uids || []);
         await fetchSummary(data.main_uid);
         Taro.showToast({ title: "已获取数据", icon: "success" });
       } else {
@@ -110,6 +117,64 @@ export default function MainPage() {
     }
   }, [mainUid, fetchSummary]);
 
+  const openUidPanel = useCallback(() => {
+    setUidPanelVisible(true);
+    setNewUidInput("");
+  }, []);
+
+  const closeUidPanel = useCallback(() => {
+    setUidPanelVisible(false);
+  }, []);
+
+  const onSelectUid = useCallback(
+    async (uid: string) => {
+      if (!uid || uid === mainUid) {
+        setUidPanelVisible(false);
+        return;
+      }
+      try {
+        setLoading(true);
+        Taro.showLoading({ title: "切换中" });
+        await refreshPlayerByUid(uid);
+        setMainUid(uid);
+        await fetchSummary(uid);
+        Taro.showToast({ title: "已切换", icon: "success" });
+      } catch (e) {
+        Taro.showToast({ title: "切换失败", icon: "none" });
+      } finally {
+        setLoading(false);
+        Taro.hideLoading();
+        setUidPanelVisible(false);
+      }
+    },
+    [mainUid, fetchSummary]
+  );
+
+  const onBindNewUid = useCallback(async () => {
+    const uid = newUidInput.trim();
+    if (!uid) {
+      Taro.showToast({ title: "请输入 UID", icon: "none" });
+      return;
+    }
+    try {
+      setLoading(true);
+      Taro.showLoading({ title: "绑定中" });
+      const res = await bindUserUid({ uid });
+      setMainUid(uid);
+      await fetchSummary(uid);
+      const latest = (await getUserType()) as UserTypeResponse;
+      setBoundUids(latest.uids || []);
+      setNeedBind(false);
+      Taro.showToast({ title: "绑定成功", icon: "success" });
+    } catch (e) {
+      Taro.showToast({ title: "绑定失败，请重试", icon: "none" });
+    } finally {
+      setLoading(false);
+      Taro.hideLoading();
+      setUidPanelVisible(false);
+    }
+  }, [newUidInput, fetchSummary]);
+
   const onEnterDetail = useCallback(
     (characterId: string) => {
       if (!mainUid) return;
@@ -137,11 +202,24 @@ export default function MainPage() {
           onUidInputChange={setUidInput}
           onBind={onBind}
           onRefreshLatest={onRefreshLatest}
+          onUidClick={openUidPanel}
         />
         <CharacterSection
           needBind={needBind}
           characters={characters}
           onEnterDetail={onEnterDetail}
+        />
+
+        <UidManagerPanel
+          visible={uidPanelVisible}
+          loading={loading}
+          mainUid={mainUid}
+          boundUids={boundUids}
+          newUidInput={newUidInput}
+          onChangeNewUid={setNewUidInput}
+          onSelectUid={onSelectUid}
+          onBindNewUid={onBindNewUid}
+          onClose={closeUidPanel}
         />
       </View>
     </View>

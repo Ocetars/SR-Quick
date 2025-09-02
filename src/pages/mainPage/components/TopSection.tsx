@@ -13,6 +13,7 @@ interface TopSectionProps {
   onUidInputChange: (value: string) => void;
   onBind: () => void;
   onRefreshLatest: () => void;
+  onUidClick: () => void;
 }
 
 export default function TopSection({
@@ -24,6 +25,7 @@ export default function TopSection({
   onUidInputChange,
   onBind,
   onRefreshLatest,
+  onUidClick,
 }: TopSectionProps) {
   return (
     <View className="top">
@@ -64,7 +66,9 @@ export default function TopSection({
               <Text className="nickname">{player?.nickname || "未知用户"}</Text>
               <Text className="level">Lv. {player?.level || "未知"}</Text>
             </View>
-            <Text className="uid">UID: {player?.uid || mainUid}</Text>
+            <Text className="uid" onClick={onUidClick}>
+              UID: {player?.uid || mainUid}
+            </Text>
           </View>
           <Button
             className="btnRefresh"

@@ -1,6 +1,7 @@
 import { View, Text, Input, Button, Image } from "@tarojs/components";
 import type { PlayerInfo } from "@/types/mihomo";
 import refreshIcon from "@/assets/refresh.png";
+import changeIcon from "@/assets/change.png";
 import "./TopSection.css";
 import ResolvedImage from "@/utils/ResolvedImage";
 
@@ -66,9 +67,17 @@ export default function TopSection({
               <Text className="nickname">{player?.nickname || "未知用户"}</Text>
               <Text className="level">Lv. {player?.level || "未知"}</Text>
             </View>
-            <Text className="uid" onClick={onUidClick}>
-              UID: {player?.uid || mainUid}
-            </Text>
+            <View className="uidChangeSection" onClick={onUidClick}>
+              <View className="uidInfo">
+                <Text className="uid">UID: {player?.uid || mainUid}</Text>
+                <Text className="changeHint">点击切换账号</Text>
+              </View>
+              <Image
+                src={changeIcon}
+                className="icon-change"
+                style={{ width: 18, height: 18 }}
+              />
+            </View>
           </View>
           <Button
             className="btnRefresh"

@@ -240,7 +240,7 @@ export default function UidManagerPanel(props: UidManagerPanelProps) {
     opacity: isEntering ? 1 : 0,
     transform: isEntering
       ? "translateY(0) scale(1)"
-      : "translateY(12px) scale(0.98)",
+      : "translateY(-12px) scale(0.98)",
     transition: `transform ${ANIM_MS}ms ease, opacity ${ANIM_MS}ms ease`,
   } as const;
 

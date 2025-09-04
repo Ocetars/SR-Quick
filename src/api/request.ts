@@ -67,11 +67,56 @@ export const Smartrequest = async <T = any>(
   path: string,
   options?: { method?: "GET" | "POST" | "PUT" | "DELETE"; data?: any }
 ) => {
-  if (USE_LOCAL_API) {
-    console.log(`🔧 使用本地API: ${LOCAL_API_BASE_URL}${path}`);
-    return await localRequest<T>(path, options);
-  } else {
-    console.log(`☁️ 使用云托管API: ${path}`);
-    return await cloudRequest<T>(path, options);
+  let resp: any;
+  try {
+    if (USE_LOCAL_API) {
+      console.log(`🔧 使用本地API: ${LOCAL_API_BASE_URL}${path}`);
+      resp = await localRequest<any>(path, options);
+    } else {
+      console.log(`☁️ 使用云托管API: ${path}`);
+      resp = await cloudRequest<any>(path, options);
+    }
+  } catch {
+    throw new Error("网络异常，请检查网络后重试");
+  }
+
+  const statusCode = (resp && (resp.statusCode ?? resp.status)) as
+    | number
+    | undefined;
+  let body: any = resp?.data;
+
+  if (typeof body === "string") {
+    try {
+      body = body ? JSON.parse(body) : {};
+    } catch {
+      throw new Error("服务返回异常，请稍后重试");
+    }
+  }
+
+  switch (body?.status) {
+    case "success":
+      return body.data as T;
+    case "fail": {
+      const info = body?.data;
+      const msg = info?.error || "请求不合法，请检查输入";
+      const err: any = new Error(msg);
+      err.kind = "fail";
+      err.details = info?.details;
+      err.raw = info;
+      err.httpStatus = statusCode;
+      return Promise.reject(err);
+    }
+    case "error": {
+      const errBody = body;
+      const msg = errBody?.message || "服务器开小差了，请稍后再试";
+      const err: any = new Error(msg);
+      err.kind = "error";
+      err.code = errBody?.code;
+      err.raw = errBody?.data;
+      err.httpStatus = statusCode;
+      return Promise.reject(err);
+    }
+    default:
+      return Promise.reject(new Error("非预期返回格式，请稍后再试"));
   }
 };

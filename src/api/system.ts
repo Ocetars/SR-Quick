@@ -9,16 +9,16 @@ import type { HealthResponse, DebugIpResponse } from "@/types/api";
  * 健康检查
  */
 export const getHealth = async () => {
-  const res = await Smartrequest<HealthResponse>("/health", { method: "GET" });
-  return res.data;
+  const data = await Smartrequest<HealthResponse>("/health", { method: "GET" });
+  return data;
 };
 
 /**
  * 调试IP信息
  */
 export const getDebugIp = async () => {
-  const res = await Smartrequest<DebugIpResponse>("/debug/ip", {
+  const data = await Smartrequest<DebugIpResponse>("/debug/ip", {
     method: "GET",
   });
-  return res.data;
+  return data;
 };

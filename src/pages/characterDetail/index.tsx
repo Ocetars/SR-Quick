@@ -2,6 +2,7 @@ import { View, Text, Image, ScrollView } from "@tarojs/components";
 import Taro, { useLoad } from "@tarojs/taro";
 import { useCallback, useState } from "react";
 import { getCharacterDetail } from "@/api/user";
+import { toUserMessage } from "@/utils/apiError";
 import type { CharacterInfo } from "@/types/mihomo";
 
 export default function CharacterDetailPage() {
@@ -14,7 +15,8 @@ export default function CharacterDetailPage() {
       const data = await getCharacterDetail({ uid, characterId });
       if (data) setDetail(data);
     } catch (e) {
-      Taro.showToast({ title: "加载失败", icon: "none" });
+      const msg = toUserMessage(e);
+      Taro.showToast({ title: msg || "加载失败", icon: "none" });
     } finally {
       setLoading(false);
     }

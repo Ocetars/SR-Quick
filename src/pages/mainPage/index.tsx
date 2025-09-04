@@ -17,7 +17,8 @@ import type {
 } from "@/types/api";
 import TopSection from "./components/TopSection";
 import CharacterSection from "./components/CharacterSection";
-import UidManagerPanel from "@/components/UidManagerPanel";
+import UidManagerPanel from "@/pages/mainPage/components/UidManagerPanel";
+import { toUserMessage, isUnauthorized } from "@/utils/apiError";
 
 import background from "@/assets/bg1.jpg";
 
@@ -56,7 +57,12 @@ export default function MainPage() {
         setNeedBind(true);
       }
     } catch (e) {
-      Taro.showToast({ title: "加载失败", icon: "none" });
+      const msg = toUserMessage(e);
+      if (isUnauthorized(e)) {
+        Taro.showModal({ title: "需要登录", content: msg, showCancel: false });
+      } else {
+        Taro.showToast({ title: msg, icon: "none" });
+      }
     } finally {
       setLoading(false);
     }
@@ -72,7 +78,8 @@ export default function MainPage() {
         setCharacters(data.characters || []);
       }
     } catch (e) {
-      Taro.showToast({ title: "获取首页数据失败", icon: "none" });
+      const msg = toUserMessage(e);
+      Taro.showToast({ title: msg || "获取首页数据失败", icon: "none" });
     } finally {
       setLoading(false);
     }
@@ -93,7 +100,8 @@ export default function MainPage() {
       await fetchSummary(uid);
       Taro.showToast({ title: "绑定成功", icon: "success" });
     } catch (e) {
-      Taro.showToast({ title: "绑定失败，请重试", icon: "none" });
+      const msg = toUserMessage(e);
+      Taro.showToast({ title: msg || "绑定失败，请重试", icon: "none" });
     } finally {
       setLoading(false);
       Taro.hideLoading();
@@ -110,7 +118,8 @@ export default function MainPage() {
       await fetchSummary(mainUid);
       Taro.showToast({ title: "已更新", icon: "success" });
     } catch (e) {
-      Taro.showToast({ title: "更新失败", icon: "none" });
+      const msg = toUserMessage(e);
+      Taro.showToast({ title: msg || "更新失败", icon: "none" });
     } finally {
       setLoading(false);
       Taro.hideLoading();
@@ -140,7 +149,8 @@ export default function MainPage() {
         await fetchSummary(uid);
         Taro.showToast({ title: "已切换", icon: "success" });
       } catch (e) {
-        Taro.showToast({ title: "切换失败", icon: "none" });
+        const msg = toUserMessage(e);
+        Taro.showToast({ title: msg || "切换失败", icon: "none" });
       } finally {
         setLoading(false);
         Taro.hideLoading();
@@ -167,7 +177,8 @@ export default function MainPage() {
       setNeedBind(false);
       Taro.showToast({ title: "绑定成功", icon: "success" });
     } catch (e) {
-      Taro.showToast({ title: "绑定失败，请重试", icon: "none" });
+      const msg = toUserMessage(e);
+      Taro.showToast({ title: msg || "绑定失败，请重试", icon: "error" });
     } finally {
       setLoading(false);
       Taro.hideLoading();

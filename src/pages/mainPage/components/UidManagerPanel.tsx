@@ -204,7 +204,7 @@ export default function UidManagerPanel(props: UidManagerPanelProps) {
   } = props;
 
   // 动画：进入/退出
-  const ANIM_MS = 300;
+  const ANIM_MS = 400;
   const [showing, setShowing] = useState(visible);
   const [isEntering, setIsEntering] = useState(false);
 

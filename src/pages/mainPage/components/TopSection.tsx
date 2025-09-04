@@ -28,6 +28,23 @@ export default function TopSection({
   onRefreshLatest,
   onUidClick,
 }: TopSectionProps) {
+  // 计算昵称显示宽度：中文字母算2，英文字母算1
+  const calculateDisplayWidth = (str: string): number => {
+    let width = 0;
+    for (let i = 0; i < str.length; i++) {
+      const char = str[i];
+      if (/[\u4e00-\u9fff\u3000-\u303f\uff00-\uffef]/.test(char)) {
+        width += 2;
+      } else {
+        width += 1;
+      }
+    }
+    return width;
+  };
+  const nicknameStr = player?.nickname || "未知用户";
+  const displayWidth = calculateDisplayWidth(nicknameStr);
+  const shouldShowLevel = displayWidth <= 8; // 阈值
+
   return (
     <View className="top">
       {needBind ? (
@@ -64,21 +81,18 @@ export default function TopSection({
           </View>
           <View className="infoSection">
             <View className="nameLevel">
-              <Text className="nickname">{player?.nickname || "未知用户"}</Text>
-              <Text className="level">Lv. {player?.level || "未知"}</Text>
+              <Text className="nickname">{nicknameStr}</Text>
+              {shouldShowLevel ? (
+                <Text className="level">Lv.{player?.level || "未知"}</Text>
+              ) : null}
             </View>
-            <View className="uidChangeSection" onClick={onUidClick}>
-              <View className="uidInfo">
-                <Text className="uid">UID: {player?.uid || mainUid}</Text>
-                <Text className="changeHint">点击切换账号</Text>
-              </View>
-              <Image
-                src={changeIcon}
-                className="icon-change"
-                style={{ width: 18, height: 18 }}
-              />
-            </View>
+            <Text className="uid">UID: {player?.uid || mainUid}</Text>
           </View>
+
+          <View className="uidChangeSection" onClick={onUidClick}>
+            <Image src={changeIcon} style={{ width: 20, height: 20 }} />
+          </View>
+          <View style={{ flex: 1 }} />
           <Button
             className="btnRefresh"
             disabled={loading}
